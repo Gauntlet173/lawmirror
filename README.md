@@ -1,7 +1,7 @@
-# ProseMirror Legislative Editing Test
+# LawMirror
 
 So this is a basic react package with some stuff added from a ProseMirror example online, to allow me to play
-with the possibility of doing structured legislative editing in the browser.
+with the possibility of doing structured legislative editing in the AkomaNtoso XML format in the browser.
 
 Clone the repository, do npm install of the libraries referred to in App.js and run `npm start`, and it should launch the editor in a new browser window for you.
 

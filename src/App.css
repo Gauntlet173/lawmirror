@@ -70,7 +70,7 @@ img.ProseMirror-separator {
 }
 
 .ProseMirror-menuseparator {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #444;
   margin-right: 3px;
 }
 
@@ -335,95 +335,197 @@ img.ProseMirror-separator {
 
 title { display: block; font-size: xx-large;}
 
-.menubar {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  line-height: 0.1;
-}
-.menuicon {
-  display: inline-block;
-  border-right: 1px solid rgba(0, 0, 0, 0.2);
-  color: #888;
-  line-height: 1;
-  padding: 0 7px;
-  margin: 1px;
-  cursor: pointer;
-  text-align: center;
-  min-width: 1.4em;
+akomantoso.debug * {
+  display: block;
 }
 
-akomantoso *::before {
-  font-size: small;
-  color:#ddd;
-}
-
-akomantoso *::after {
-  font-size: small;
-  color: #ddd;
-}
-
-akomantoso num {
+akomantoso intro p:first-child {
   display: inline;
 }
 
-akomantoso act::before {
+akomantoso heading {
+  font-weight: bold;
+}
+
+akomantoso.debug::before {
+  font-size: small;
+  color: #444;
+  content: "<akomantoso>";
+}
+
+
+
+akomantoso.debug::after {
+  font-size: small;
+  color: #444;
+  content: "</akomantoso>";
+}
+
+
+akomantoso.debug act::before {
+  font-size: small;
+  color: #444;
   content: "<act>";
 }
 
-akomantoso act::after {
+
+
+akomantoso.debug act::after {
+  font-size: small;
+  color: #444;
   content: "</act>";
 }
-akomantoso body::before {
+
+akomantoso.debug heading::before {
+  font-size: small;
+  color: #444;
+  content: "<heading>";
+}
+
+akomantoso.debug heading::after {
+  font-size: small;
+  color: #444;
+  content: "</heading>";
+}
+
+akomantoso act *:not(section) > num::after {
+  content: ")";
+}
+
+akomantoso act *:not(section) > num::before {
+  content: "(";
+}
+
+akomantoso act section > num::after {
+  content: ".";
+}
+
+akomantoso.debug body::before {
+  font-size: small;
+  color: #444;
   content: "<body>";
 }
 
-akomantoso body::after {
+akomantoso.debug body::after {
+  font-size: small;
+  color: #444;
   content: "</body>";
 }
 
-akomantoso title::before {
+akomantoso.debug title::before {
+  font-size: small;
+  color: #444;
   content: "<title>";
 }
 
-akomantoso title::after {
+akomantoso.debug title::after {
+  font-size: small;
+  color: #444;
   content: "</title>";
 }
 
-akomantoso section::before {
+akomantoso.debug section::before {
+  font-size: small;
+  color: #444;
   content: "<section>";
 }
 
-akomantoso section::after {
+akomantoso.debug section::after {
+  font-size: small;
+  color: #444;
   content: "</section>";
 }
 
-akomantoso num::before {
+akomantoso.debug subsection::before {
+  font-size: small;
+  color: #444;
+  content: "<subsection>";
+}
+
+akomantoso.debug subsection::after {
+  font-size: small;
+  color: #444;
+  content: "</subsection>";
+}
+akomantoso.debug paragraph::before {
+  font-size: small;
+  color: #444;
+  content: "<paragraph>";
+}
+
+akomantoso.debug paragraph::after {
+  font-size: small;
+  color: #444;
+  content: "</paragraph>";
+}
+akomantoso.debug subparagraph::before {
+  font-size: small;
+  color: #444;
+  content: "<subparagraph>";
+}
+
+akomantoso.debug subparagraph::after {
+  font-size: small;
+  color: #444;
+  content: "</subparagraph>";
+}
+
+akomantoso.debug num::before {
+  font-size: small;
+  color: #444;
+  content: "<num>(";
+}
+
+akomantoso.debug num::after {
+  font-size: small;
+  color: #444;
+  content: ")</num>";
+}
+
+akomantoso.debug section > num::before {
+  font-size: small;
+  color: #444;
   content: "<num>";
 }
 
-akomantoso num::after {
-  content: "</num>";
+akomantoso.debug section > num::after {
+  font-size: small;
+  color: #444;
+  content: ".</num>";
 }
 
-akomantoso p::before {
+akomantoso.debug p::before {
+  font-size: small;
+  color: #444;
   content: "<p>";
 }
 
-akomantoso p::after {
+akomantoso.debug p::after {
+  font-size: small;
+  color: #444;
   content: "</p>";
 }
 
-akomantoso intro::before {
+akomantoso.debug intro::before {
+  font-size: small;
+  color: #444;
   content: "<intro>";
 }
 
-akomantoso intro::after {
+akomantoso.debug intro::after {
+  font-size: small;
+  color: #444;
   content: "</intro>";
 }
 
-akomantoso wrapup::before {
+akomantoso.debug wrapup::before {
+  font-size: small;
+  color: #444;
   content: "<wrapup>";
 }
 
-akomantoso wrapup::After {
+akomantoso.debug wrapup::After {
+  font-size: small;
+  color: #444;
   content: "</wrapup>";
 }

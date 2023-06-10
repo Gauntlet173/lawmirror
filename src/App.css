@@ -529,3 +529,15 @@ akomantoso.debug wrapup::After {
   color: #444;
   content: "</wrapup>";
 }
+
+akomantoso.debug span::before {
+  font-size: small;
+  color: #444;
+  content: "<span>";
+}
+
+akomantoso.debug span::after {
+  font-size: small;
+  color: #444;
+  content: "</span>";
+}

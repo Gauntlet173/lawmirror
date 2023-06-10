@@ -13,20 +13,26 @@ function createSpanFromSelectedText(state, dispatch) {
   const span = state.schema.nodes.span;
   
   const { from, to } = state.selection;
+  console.log("From: " + from);
+  console.log("To: " + to);
 
   // Get the selected text
   let selectedText = state.doc.textBetween(from, to);
-
+  console.log("Selected text: " + selectedText);
   // Create a new span node with the selected text as its content
   let spanNode = span.create(null, state.schema.text(selectedText));
-
+  console.log("New Node: ", spanNode)
   // Create a transaction that replaces the selected text with the span node
   let tr = state.tr.replaceWith(from, to, spanNode);
-
-
+  // console.log("Transaction:", tr.toJSON());  // Log the transaction
+  // console.log("Doc before:", state.doc.toString());  // Log the document before
+  // console.log("Doc after:", tr.doc.toString());  // Log the document after.
+  
+  
   // Check if the transaction is valid before dispatching
   if (dispatch) {
     dispatch(tr);
+    console.log("Dispatching");
     return true;
   }
 }
@@ -355,7 +361,7 @@ function App() {
           marks: ""
         },
         legaltext: {
-          content: "text*",
+          content: "(text|span)*",
           toDOM(node) {return ['p',0]},
           parseDOM: [{tag: "p"}],
           marks: ""

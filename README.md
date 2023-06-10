@@ -29,16 +29,15 @@ Known Problems:
 * You can add multiple headers to the same section or subsection, which violates the schema. Code should do nothing if immediate parent already has one.
 * Adding sections sometimes doesn't work properly? (Haven't seen this for a while.)
 * If you add a wrapup to a paragraph that already has one, it creates a new paragraph incorrectly. Same problem with headers. Just need to make it so that it doesn't add a wrapup if the most immediate parent already has one.
-* Adding spans doesn't change the DOM (in debug, this was because the transaction was getting overridden.)
 * Undo (Ctrl-Z) and redo (Ctrl-Y) don't behave properly.
 
 Some todos:
+* Add a UI for editing the attributes of the elements
 * Better keyboard shortcuts. (that don't overlap with things Chrome does, like C-S-W)
 * add advanced commands
   * promote
   * demote
 * Improve the UI
-* Add a UI for editing the attributes of the elements
 
 Proposed Keyboard Navigation Rules:
 * Title

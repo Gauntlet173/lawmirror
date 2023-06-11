@@ -20,7 +20,7 @@ function createSpanFromSelectedText(state, dispatch) {
   let selectedText = state.doc.textBetween(from, to);
   console.log("Selected text: " + selectedText);
   // Create a new span node with the selected text as its content
-  let spanNode = span.create(null, state.schema.text(selectedText));
+  let spanNode = span.create(null, state.schema.nodes.legaltext.create(null, state.schema.text(selectedText)));
   console.log("New Node: ", spanNode)
   // Create a transaction that replaces the selected text with the span node
   let tr = state.tr.replaceWith(from, to, spanNode);
@@ -276,6 +276,42 @@ const myKeymap = keymap({
   ...baseKeymap
 });
 
+function promptForNewId(oldId) {
+  let newId = prompt("Enter new ID", oldId);
+  return newId;
+}
+
+function updateId(state, dispatch) {
+  let {from, to, node} = state.selection;
+  if (node.type.name !== "span") {
+    return false;  // Not a span node, ignore
+  }
+
+  let newId = promptForNewId(node.attrs.id);
+  if (newId === null) {
+    return false;  // User cancelled
+  }
+
+  if (dispatch) {
+    let tr = state.tr.setNodeMarkup(from, null, Object.assign({}, node.attrs, {id: newId}));
+    dispatch(tr);
+  }
+  
+  return true;
+}
+
+// // Use the command
+// let plugin = new Plugin({
+//   key: new PluginKey('updateIdPlugin'),
+//   props: {
+//     handleKeyDown(view, event) {
+//       if (event.key === 'Enter' && event.ctrlKey) {
+//         return updateId(view.state, view.dispatch);
+//       }
+//       return false;
+//     }
+//   }
+// });
 
 
 function App() {
@@ -284,97 +320,82 @@ function App() {
     const cleanSchema = new Schema({
       nodes: {
         doc: {
-          content: "andoc",
-          marks: ""
+          content: "andoc"
         },
         andoc: {
           content: "act",
           attrs: { id: {default: "akomaNtosoElement"}, class: {default: "an debug"} },
           toDOM(node) {return ['akomantoso',{ id: node.attrs.id, class: node.attrs.class }, 0]},
-          parseDOM: [{tag: "akomantoso", getAttrs(dom) {return {id: dom.getAttribute("id"), class: dom.getAttribute("class")}}}],
-          marks: ""
+          parseDOM: [{tag: "akomantoso", getAttrs(dom) {return {id: dom.getAttribute("id"), class: dom.getAttribute("class")}}}]
         },
         act: {
           content: "body", 
           toDOM(node) {return ['act',0]},
-          parseDOM: [{tag: "act"}],
-          marks: ""
+          parseDOM: [{tag: "act"}]
         },
         body: {
           content: "title section+",
           toDOM(node) { return ['body',0]},
-          parseDOM: [{tag: "body"}],
-          marks: ""
+          parseDOM: [{tag: "body"}]
         },
         title: {
           content: "text*", 
           toDOM(node) {return ['title',0]},
-          parseDOM: [{tag: "title"}],
-          marks: ""
+          parseDOM: [{tag: "title"}]
         },
         heading: {
           content: "text*",
           toDOM(node) {return ['heading',0]},
-          parseDOM: [{tag: "heading"}],
-          marks: ""
+          parseDOM: [{tag: "heading"}]
         },
         section: {
-          content: "heading? number intro (subsection* | paragraph*) wrapup?",
+          content: "heading? number intro (subsection* | paragraph* ) wrapup?",
           toDOM(node) {return ['section',0]},
-          parseDOM: [{tag: "section"}],
-          marks: ""
+          parseDOM: [{tag: "section"}]
         },
         subsection: {
           content: "heading? number intro paragraph* wrapup?",
           toDOM(node) {return ['subsection',0]},
-          parseDOM: [{tag: "subsection"}],
-          marks: ""
+          parseDOM: [{tag: "subsection"}]
         },
         paragraph: {
           content: "number intro subparagraph* wrapup?",
           toDOM(node) {return ['paragraph',0]},
-          parseDOM: [{tag: "paragraph"}],
-          marks: ""
+          parseDOM: [{tag: "paragraph"}]
         },
         subparagraph: {
           content: "number intro",
           toDOM(node) {return ['subparagraph',0]},
-          parseDOM: [{tag: "subparagraph"}],
-          marks: ""
+          parseDOM: [{tag: "subparagraph"}]
         },
         intro: {
-          content: "legaltext+",
+          content: "(legaltext | span)+",
           toDOM(node) { return ['intro',0]},
-          parseDOM: [{tag: "intro"}],
-          marks: ""
+          parseDOM: [{tag: "intro"}]
         },
         wrapup: {
-          content: "legaltext+",
+          content: "(legaltext | span)+",
           toDOM(node) {return ['wrapup',0]},
-          parseDOM: [{tag: "wrapup"}],
-          marks: ""
+          parseDOM: [{tag: "wrapup"}]
         },
         number: {
           content: "text*",
           toDOM(node) { return ['num',0]},
-          parseDOM: [{tag: "number"}],
-          marks: ""
+          parseDOM: [{tag: "number"}]
         },
         legaltext: {
-          content: "(text|span)*",
+          content: "text*",
           toDOM(node) {return ['p',0]},
-          parseDOM: [{tag: "p"}],
-          marks: ""
+          parseDOM: [{tag: "p"}]
         },
         span: {
-          content: "text*",
-          inline: true,
+          content: "(span | legaltext)*",
+          group: "block",
           attrs: { id: {default: ""}},
           toDOM(node) {return['span',{ id: node.attrs.id},0]},
-          parseDOM: [{tag: "span", getAttrs(dom) {return {id: dom.getAttribute("id")}}}],
-          marks: ""
+          parseDOM: [{tag: "span", getAttrs(dom) {return {id: dom.getAttribute("id")}}}]
         },
-        text: { marks: ""},
+        text: {},
       },
       marks: {}
     })
@@ -465,6 +486,11 @@ function App() {
       createSpanFromSelectedText(state,dispatch);
     });
 
+    document.getElementById("set-span-id").addEventListener("click", function() {
+      let { state,dispatch } = window.view;
+      updateId(state,dispatch);
+    });
+
     applyDevTools(window.view);
 
   })
@@ -480,6 +506,7 @@ function App() {
       <button id="insert-subparagraph">Insert Subaragraph</button>
       <button id="insert-wrapup">Insert Wrapup</button>
       <button id="insert-span">Insert Span</button>
+      <button id="set-span-id">Name Span</button>
       <p>Keyboard Shortcuts:</p>
       <dl><dt>Ctrl-Shift-1</dt><dd>Add Section</dd>
       <dt>Ctrl-Shift-2</dt><dd>Add Subsection</dd>

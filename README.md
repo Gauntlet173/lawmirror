@@ -32,7 +32,6 @@ Known Problems:
 * Undo (Ctrl-Z) and redo (Ctrl-Y) don't behave properly.
 
 Some todos:
-* Add a UI for editing the attributes of the elements
 * Better keyboard shortcuts. (that don't overlap with things Chrome does, like C-S-W)
 * add advanced commands
   * promote

@@ -24,50 +24,33 @@ Which also means that any valid akomontoso could be copied and pasted into the e
 (Assuming that the schema designed in prosemirror covered all of the elements and attributes in use by the file you pasted in.)
 
 Known Problems:
-* There is a "text nodes can't be empty" error when not in debug mode.
-* Not everything is possible to cursor into as soon as it's created (when not set to display: block;, everything works in debug mode.)
-* You can add multiple headers to the same section or subsection, which violates the schema. Code should do nothing if immediate parent already has one.
-* Adding sections sometimes doesn't work properly? (Haven't seen this for a while.)
-* If you add a wrapup to a paragraph that already has one, it creates a new paragraph incorrectly. Same problem with headers. Just need to make it so that it doesn't add a wrapup if the most immediate parent already has one.
-* Undo (Ctrl-Z) and redo (Ctrl-Y) don't behave properly.
+* Can't cursor into legaltext sections when they are created empty
+* Can't see where the legaltext sections are when they are empty.
+* Shouldn't add a header or wrap-up if there already is one in the current element.
 
 Some todos:
-* Better keyboard shortcuts. (that don't overlap with things Chrome does, like C-S-W)
+* Make sure that I'm following the <title> syntax properly. It might be in a different place in CLEAN.
+* Implement undo and redo
+* Better keyboard shortcuts.
 * add advanced commands
   * promote
   * demote
 * Improve the UI
 
-Proposed Keyboard Navigation Rules:
-* Title
-  * If you are anywhere in the title and you hit enter, it will move the cursor to the first section.
-* Section
-  * If you are at the end of a paragraph that is the last paragraph in a section, and you hit enter, it will create a new section
-  * If you are in a section and hit tab, the section will be converted into a subsection of the previous section, and its children demoted also, if possible.
-  * If you are in an empty section and you hit enter, nothing will happen.
-  * If you are in a section and you hit CTRL-H, it will insert a header for that section and move the cursor there.
-* Subsection
-  * If you are at the end of a paragraph that is the last paragraph in a subsection, and you hit enter, it will create a new subsection
-  * If you are at the start of a subsection and hit tab, the subsection will be converted into a paragraph under the previous subsection or section and its children demoted also if possible
-  * If you are at the start of a subsection and hit shift-tab, the subsection will be promoted into a section and its children promoted too, if possible.
-  * If you are at the start of an empty subsection that is the last subsection in a list, and you hit enter, the empty subsection will be converted into a wrapup text.
-  * If you are in a subsection and you hit CTRL-H, it will insert a header for that subsection and move the cursor there.
-* Wrapup
-  * If you hit enter in an empty wrapup text, it is removed and replaced with a new element of the same level as the one that it is wrapping up.
-  * If you hit enter in a filled wrapup text, it creates a new element of the same level as the one you were wrapping up.
-* Number
-  * If you hit enter in a number field it takes you to the first paragraph in the intro.
-* Header
-  * If you hit enter in an empty header, it will be removed.
-* Paragraph
-  * If you are at the end of a text that is the last text in a paragraph, and you hit enter, it will create a new paragraph
-  * If you are at the start of a paragraph and hit tab, the paragraph will be demoted into a sub- paragraph under the previous paragraph if possible.
-  * If you are at the start of a paragraph and hit shift-tab, the paragraph will be promoted into a subsection with its children, if possible.
-  * If you are at the start of an empty paragraph that is the last paragraph in a section or subsection, and you hit enter, the empty paragraph will be converted into a wrapup text.
-* Subparagraph
-  * If you are at the end of a text that is the last text in a sub-paragraph, and you hit enter, it will create a new sub-paragraph
-  * If you are at the start of a sub-paragraph and hit shift-tab, the sub-paragraph will be promoted into a paragraph, if possible (I think this is always possible).
-  * If you are at the start of an empty sub-paragraph that is the last sub-paragraph in a paragraph, and you hit enter, the empty sub-paragraph will be converted into a wrapup text.
-* LegalText
-  * If you hit CTRL-ENTER inside a legal text, a new legal text will be added after the current one, or the current one split into two, as appropriate.
-  * If you hit CTRL-S while selecting a portion of a legal text, that portion of the legal text will be converted into a span.
+New Keyboard Navigation Proposal:
+Ctrl-Enter - create a new paragraph in a legal text.
+Enter -
+  - in a title, go to the num of the first section.
+  - in a header, go to the num.
+  - in a num, go to the intro.
+  - in an intro, go to the first sub-element, or if there are none, create one.
+  - in an empty sub-element with siblings, remove it and go to the wrapup of the current parent
+  - in an empty sub-element with no siblings, go to or create the next element.
+  - in a full sub-element, go to or create the next sub-element.
+  - in an empty wrap-up, delete it and go to or create a new element of the same type
+  - in a full wrap-up, go to or create a new element of the same type.
+Ctrl-Right - demote the current hierarchical element and its children if possible.
+Ctrl-Left - promote the current hierarchical element and its children if possible.
+Ctrl-Up - Add a header to the current section or subsection, if it doesn't already exist, and go to it.
+Ctrl-Down - Add a wrapup text to the current section, subsection, or paragraph, if it doesn't already exist, and go to it.
+??? - Turn the selected text into a span, and give it a name.

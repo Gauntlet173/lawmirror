@@ -147,7 +147,7 @@ function insertHeaderInCurrentSectionOrSubSection(state, dispatch) {
   if (dispatch) {
 
       let sectionNode = $from.node(depth);
-      let heading = state.schema.nodes.heading.create({}, state.schema.text(''));
+      let heading = state.schema.nodes.heading.create({}, state.schema.text('New Heading'));
       let contentArray = [heading];
 
       // Append each child node from the original section to the array
@@ -496,7 +496,6 @@ function App() {
   })
   return (
     <div className="App">
-      <div id="editor"></div>
       <button id="select-parent">Select Parent Node</button>
       <button id="toggle-debug">Toggle Debug</button>
       <button id="insert-section">Insert Section</button>
@@ -507,15 +506,8 @@ function App() {
       <button id="insert-wrapup">Insert Wrapup</button>
       <button id="insert-span">Insert Span</button>
       <button id="set-span-id">Name Span</button>
-      <p>Keyboard Shortcuts:</p>
-      <dl><dt>Ctrl-Shift-1</dt><dd>Add Section</dd>
-      <dt>Ctrl-Shift-2</dt><dd>Add Subsection</dd>
-      <dt>Ctrl-Shift-3</dt><dd>Add Paragraph</dd>
-      <dt>Ctrl-Shift-4</dt><dd>Add Subparagraph</dd>
-      <dt>Ctrl-Shift-H</dt><dd>Add Header</dd>
-      <dt>Ctrl-Shift-S</dt><dd>Add Span</dd>
-      </dl>
-      <p>Demonstration of using <a href="https://prosemirror.net">ProseMirror</a> to generate <a href="http://www.akomantoso.org/">AkomaNtoso</a> by Lexpedite Legal Technology Ltd.</p>
+      <div id="editor"></div>
+      <p>LawMirror: Demonstration of using <a href="https://prosemirror.net">ProseMirror</a> to generate <a href="http://www.akomantoso.org/">AkomaNtoso</a> by Lexpedite Legal Technology Ltd.</p>
     </div>
   );
 }

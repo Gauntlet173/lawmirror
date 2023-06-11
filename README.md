@@ -29,7 +29,10 @@ Known Problems:
 * Shouldn't add a header or wrap-up if there already is one in the current element.
 
 Some todos:
-* Make sure that I'm following the <title> syntax properly. It might be in a different place in CLEAN.
+* the <act> needs a <preamble> which should have a <p> with a <shortTitle> inside.
+* the <akomaNtoso> element should appear inside an <xml> element.
+* there should be xmlns elements on the <xml> and <akomaNtoso> elements, I think.
+* Investigate how difficult it would be to generate eID attributes.
 * Implement undo and redo
 * Better keyboard shortcuts.
 * add advanced commands
@@ -38,7 +41,7 @@ Some todos:
 * Improve the UI
 
 New Keyboard Navigation Proposal:
-Ctrl-Enter - create a new paragraph in a legal text.
+Ctrl-Enter - with text selected, create and name a span, otherwise create a new paragraph in a legal text.
 Enter -
   - in a title, go to the num of the first section.
   - in a header, go to the num.
@@ -53,4 +56,3 @@ Ctrl-Right - demote the current hierarchical element and its children if possibl
 Ctrl-Left - promote the current hierarchical element and its children if possible.
 Ctrl-Up - Add a header to the current section or subsection, if it doesn't already exist, and go to it.
 Ctrl-Down - Add a wrapup text to the current section, subsection, or paragraph, if it doesn't already exist, and go to it.
-??? - Turn the selected text into a span, and give it a name.

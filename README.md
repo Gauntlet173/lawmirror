@@ -25,10 +25,9 @@ Which also means that any valid akomontoso could be copied and pasted into the e
 
 Known Problems:
 * Cursor should move into the newly-created thing, but it doesn't.
-* Shouldn't add a header or wrap-up if there already is one in the current element.
 
 Must-have (if this is to be used to replace CLEAN):
-* Investigate how difficult it would be to generate eID attributes.
+* Generate eID attributes.
 * Get the auto-generated index numbers into the <num> tag.
 
 Nice-to-have:

@@ -81,6 +81,23 @@ function insertWrapupInCurrentSectionOrSubSectionOrParagraph(state,dispatch) {
           return false;
       }
   }
+
+
+  let sectionNode = $from.node(depth);
+
+  // Check if the current section or subsection already has a heading
+  let hasWrapup = false;
+  sectionNode.forEach(child => {
+      if (child.type.name === 'wrapup') {
+          hasWrapup = true;
+      }
+  });
+
+  if (hasWrapup) {
+      console.log("The current element already has a wrapup.");
+      return false;
+  }
+
   // Add a header to it.
   if (dispatch) {
       const after = $from.after($from.depth - 1);
@@ -143,6 +160,22 @@ function insertHeaderInCurrentSectionOrSubSection(state, dispatch) {
           return false;
       }
   }
+
+  let sectionNode = $from.node(depth);
+
+  // Check if the current section or subsection already has a heading
+  let hasHeading = false;
+  sectionNode.forEach(child => {
+      if (child.type.name === 'heading') {
+          hasHeading = true;
+      }
+  });
+
+  if (hasHeading) {
+      console.log("The current section or subsection already has a heading.");
+      return false;
+  }
+  
   // Add a header to it.
   if (dispatch) {
 

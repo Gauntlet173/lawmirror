@@ -24,21 +24,26 @@ Which also means that any valid akomontoso could be copied and pasted into the e
 (Assuming that the schema designed in prosemirror covered all of the elements and attributes in use by the file you pasted in.)
 
 Known Problems:
-* Can't cursor into legaltext sections when they are created empty
-* Can't see where the legaltext sections are when they are empty.
+* Cursor should move into the newly-created thing, but it doesn't.
 * Shouldn't add a header or wrap-up if there already is one in the current element.
 
-Some todos:
-* the <act> needs a <preamble> which should have a <p> with a <shortTitle> inside.
-* the <akomaNtoso> element should appear inside an <xml> element.
-* there should be xmlns elements on the <xml> and <akomaNtoso> elements, I think.
+Must-have (if this is to be used to replace CLEAN):
 * Investigate how difficult it would be to generate eID attributes.
+* Get the auto-generated index numbers into the <num> tag.
+
+Nice-to-have:
+* Maybe we could let people specify the numbers, but also give them an auto-renumber button?
+* Amendment numbering
 * Implement undo and redo
 * Better keyboard shortcuts.
 * add advanced commands
   * promote
   * demote
 * Improve the UI
+
+Future Considerations:
+* Do we have what we need inside the schema to identify which sub-sections and next siblings are continuations of text?
+* Do we have the information we would need to be able to generate amending acts from version diffs, or vice-versa?
 
 New Keyboard Navigation Proposal:
 Ctrl-Enter - with text selected, create and name a span, otherwise create a new paragraph in a legal text.

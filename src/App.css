@@ -334,9 +334,14 @@ p {
   margin-block-start: 0em;
 }
 
+akomantoso {
+  counter-reset: section;
+}
+
 akomantoso section {
   display: block;
   margin-top: 1em;
+  counter-reset: sub-section paragraph;
 }
 
 akomantoso heading {
@@ -346,11 +351,13 @@ akomantoso heading {
 akomantoso subsection {
   display: block;
   margin-left: 2em;
+  counter-reset: paragraph;
 }
 
 akomantoso paragraph {
   display: block;
-  margin-left: 4em;
+  margin-left: 2em;
+  counter-reset: sub-paragraph;
 }
 
 akomantoso span {
@@ -363,15 +370,14 @@ akomantoso span + p {
 
 akomantoso subparagraph {
   display: block; 
-  margin-left: 6em;
+  margin-left: 2em;
 }
 
 akomantoso wrapup {
   display: block;
-  font-size: large;
 }
 
-akomantoso title { display: block; font-size: 300%;}
+akomantoso shorttitle { display: block; font-size: 300%;}
 
 akomantoso.debug * {
   display: block;
@@ -394,20 +400,36 @@ akomantoso.debug::before {
 
 
 
-akomantoso.debug::after {
+akomantoso.debug preamble::after {
   font-size: small;
   color: #444;
-  content: "</akomantoso>";
+  content: "</preamble>";
 }
 
+akomantoso.debug  preamble::before {
+  font-size: small;
+  color: #444;
+  content: "<preamble>";
+}
+
+
+akomantoso.debug block::after {
+  font-size: small;
+  color: #444;
+  content: "</block>";
+}
+
+akomantoso.debug  preamble::before {
+  font-size: small;
+  color: #444;
+  content: "<block>";
+}
 
 akomantoso.debug act::before {
   font-size: small;
   color: #444;
   content: "<act>";
 }
-
-
 
 akomantoso.debug act::after {
   font-size: small;
@@ -427,16 +449,24 @@ akomantoso.debug heading::after {
   content: "</heading>";
 }
 
-akomantoso act *:not(section) > num::after {
-  content: ")";
+akomantoso act section > num::before {
+  counter-increment: section;
+  content: counter(section) ".";
 }
 
-akomantoso act *:not(section) > num::before {
-  content: "(";
+akomantoso subsection > num::before {
+  counter-increment: sub-section;
+  content: counter(section) "(" counter(sub-section) ")";
 }
 
-akomantoso act section > num::after {
-  content: ".";
+akomantoso paragraph > num::before {
+  counter-increment: paragraph;
+  content: "(" counter(paragraph, lower-alpha) ")";
+}
+
+akomantoso subparagraph > num::before {
+  counter-increment: sub-paragraph;
+  content: "(" counter(sub-paragraph, lower-roman) ")";
 }
 
 akomantoso.debug body::before {
@@ -451,16 +481,16 @@ akomantoso.debug body::after {
   content: "</body>";
 }
 
-akomantoso.debug title::before {
+akomantoso.debug shorttitle::before {
   font-size: small;
   color: #444;
-  content: "<title>";
+  content: "<shorttitle>";
 }
 
-akomantoso.debug title::after {
+akomantoso.debug shorttitle::after {
   font-size: small;
   color: #444;
-  content: "</title>";
+  content: "</shorttitle>";
 }
 
 akomantoso.debug section::before {
@@ -509,28 +539,32 @@ akomantoso.debug subparagraph::after {
   content: "</subparagraph>";
 }
 
-akomantoso.debug num::before {
-  font-size: small;
-  color: #444;
-  content: "<num>(";
-}
-
-akomantoso.debug num::after {
-  font-size: small;
-  color: #444;
-  content: ")</num>";
-}
-
 akomantoso.debug section > num::before {
+  counter-increment: section;
   font-size: small;
   color: #444;
-  content: "<num>";
+  content: "<num>" counter(section) ".</num>";
 }
 
-akomantoso.debug section > num::after {
+akomantoso.debug subsection > num::before {
+  counter-increment: sub-section;
   font-size: small;
   color: #444;
-  content: ".</num>";
+  content: "<num>" counter(section) "(" counter(sub-section) ")</num>";
+}
+
+akomantoso.debug paragraph > num::before {
+  counter-increment: paragraph;
+  font-size: small;
+  color: #444;
+  content: "<num>(" counter(paragraph,lower-alpha) ")</num>";
+}
+
+akomantoso.debug subparagraph > num::before {
+  counter-increment: sub-paragraph;
+  font-size: small;
+  color: #444;
+  content: "<num>(" counter(sub-paragraph,lower-roman) ")</num>";
 }
 
 akomantoso.debug p::before {

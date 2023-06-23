@@ -320,28 +320,43 @@ function App() {
     const cleanSchema = new Schema({
       nodes: {
         doc: {
-          content: "andoc"
+          content: "andocxml"
+        },
+        andocxml: {
+          content: "andoc",
+          toDOM(node) {return ["xml",0]},
+          parseDOM: [{tag: "xml"}]
         },
         andoc: {
           content: "act",
-          attrs: { id: {default: "akomaNtosoElement"}, class: {default: "an debug"} },
-          toDOM(node) {return ['akomantoso',{ id: node.attrs.id, class: node.attrs.class }, 0]},
-          parseDOM: [{tag: "akomantoso", getAttrs(dom) {return {id: dom.getAttribute("id"), class: dom.getAttribute("class")}}}]
+          attrs: { id: {default: "akomaNtosoElement"}, class: {default: "an debug"}, xmlns: {default: "http://docs.oasis-open.org/legaldocml/ns/akn/3.0/WD17"} },
+          toDOM(node) {return ['akomantoso',{ xmlns: node.attrs.xmlns, id: node.attrs.id, class: node.attrs.class }, 0]},
+          parseDOM: [{tag: "akomantoso", getAttrs(dom) {return {xmlns: dom.getAttribute("xmlns"), id: dom.getAttribute("id"), class: dom.getAttribute("class")}}}]
         },
         act: {
-          content: "body", 
+          content: "preamble body", 
           toDOM(node) {return ['act',0]},
           parseDOM: [{tag: "act"}]
         },
+        preamble: {
+          content: "titleblock",
+          toDOM(node) {return ['preamble',0]},
+          parseDOM: [{tag: "preamble"}]
+        },
+        titleblock: {
+          content: "shorttitle",
+          toDOM(node) {return ['block',0]},
+          parseDOM: [{tag: 'block'}]
+        },
         body: {
-          content: "title section+",
+          content: "section+",
           toDOM(node) { return ['body',0]},
           parseDOM: [{tag: "body"}]
         },
-        title: {
+        shorttitle: {
           content: "text*", 
-          toDOM(node) {return ['title',0]},
-          parseDOM: [{tag: "title"}]
+          toDOM(node) {return ['shorttitle',0]},
+          parseDOM: [{tag: "shorttitle"}]
         },
         heading: {
           content: "text*",
@@ -379,8 +394,8 @@ function App() {
           parseDOM: [{tag: "wrapup"}]
         },
         number: {
-          content: "text*",
-          toDOM(node) { return ['num',0]},
+          content: "",
+          toDOM(node) { return ['num']},
           parseDOM: [{tag: "number"}]
         },
         legaltext: {

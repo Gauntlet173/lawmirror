@@ -27,8 +27,8 @@ Known Problems:
 * Cursor should move into the newly-created thing, but it doesn't.
 
 Must-have (if this is to be used to replace CLEAN):
+* Get the auto-generated index numbers from the CSS into the <num> tag.
 * Generate eID attributes.
-* Get the auto-generated index numbers into the <num> tag.
 
 Nice-to-have:
 * Maybe we could let people specify the numbers, but also give them an auto-renumber button?

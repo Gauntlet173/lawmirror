@@ -485,7 +485,7 @@ function App() {
       if ($from.depth < 2) return;
     
       // Find the position of the parent node
-      let parentPos = $from.before($from.depth - 1);
+      let parentPos = $from.before($from.depth);
     
       // Create a new NodeSelection on the parent node
       let selection = NodeSelection.create(state.doc, parentPos);

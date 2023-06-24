@@ -346,6 +346,26 @@ function updateId(state, dispatch) {
 //   }
 // });
 
+function updateBreadcrumb(view) {
+  // Get the current selection
+  let { $from } = view.state.selection;
+
+  // Create an array to store the breadcrumb parts
+  let parts = [];
+
+  // Iterate from the current depth to the root of the document
+  for (let d = 0; d <= $from.depth; d++) {
+    // Push the name of each node type into the parts array
+    parts.push($from.node(d).type.name);
+  }
+
+  // Join the parts into a single string with " > " between each part
+  let breadcrumb = parts.join(" > ");
+
+  // Update the breadcrumb element with the new breadcrumb
+  document.getElementById("breadcrumb").textContent = breadcrumb;
+}
+
 
 function App() {
   useEffect( () => {
@@ -453,7 +473,13 @@ function App() {
         //doc: DOMParser.fromSchema(cleanSchema).parse(document.querySelector("#content")),
         plugins: [myKeymap, history()],
         schema: cleanSchema,
-      })
+      }),
+      dispatchTransaction(tr) {
+        let newState = window.view.state.apply(tr);
+        window.view.updateState(newState);
+        // Update the breadcrumb whenever the selection changes
+        if (tr.selectionSet) updateBreadcrumb(window.view);
+      }
     })
     
     document.getElementById("toggle-debug").addEventListener('click', () => {
@@ -544,6 +570,7 @@ function App() {
   })
   return (
     <div className="App">
+      <div id="breadcrumb"></div>
       <button id="select-parent">Select Parent Node</button>
       <button id="toggle-debug">Toggle Debug</button>
       <button id="insert-section">Insert Section</button>

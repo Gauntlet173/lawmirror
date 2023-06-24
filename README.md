@@ -25,6 +25,8 @@ Which also means that any valid akomontoso could be copied and pasted into the e
 
 Known Problems:
 * Cursor should move into the newly-created thing, but it doesn't.
+* adding paragraphs inside a paragraph with sub-paragraphs adds multiple paragraphs.
+* It's possible to add wrap-ups to paragraphs with no sub-paragraphs.
 
 Must-have (if this is to be used to replace CLEAN):
 * Get the auto-generated index numbers from the CSS into the <num> tag.
@@ -43,8 +45,11 @@ Nice-to-have:
 Future Considerations:
 * Do we have what we need inside the schema to identify which sub-sections and next siblings are continuations of text?
 * Do we have the information we would need to be able to generate amending acts from version diffs, or vice-versa?
+* This app uses "intro" by itself, when in fact it should be using "content" for hierarchical elements without sub-units,
+  and converting content to intro when the first sub-element is created.
 
 New Keyboard Navigation Proposal:
+(This needs to be updated now that we are using CSS to get auto-numbering, and the user doesn't edit the num elements.)
 Ctrl-Enter - with text selected, create and name a span, otherwise create a new paragraph in a legal text.
 Enter -
   - in a title, go to the num of the first section.
